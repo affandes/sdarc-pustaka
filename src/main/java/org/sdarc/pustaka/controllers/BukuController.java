@@ -16,13 +16,21 @@ public class BukuController {
     public @ResponseBody Buku buatSatuBuku(
             @RequestParam String judul,
             @RequestParam String penulis,
-            @RequestParam String penerbit
+            @RequestParam String penerbit,
+            @RequestParam int tahunTerbit,
+            @RequestParam String isbn,
+            @RequestParam int stok,
+            @RequestParam String posisi
     ) {
 
         Buku buku = new Buku();
         buku.judul = judul;
         buku.penulis = penulis;
         buku.penerbit = penerbit;
+        buku.tahunTerbit = tahunTerbit;
+        buku.isbn = isbn;
+        buku.stok = stok;
+        buku.posisi = posisi;
 
         repo.save(buku);
 
@@ -41,13 +49,21 @@ public class BukuController {
             @PathVariable("id") Integer id,
             @RequestParam String judul,
             @RequestParam String penulis,
-            @RequestParam String penerbit
+            @RequestParam String penerbit,
+            @RequestParam int tahunTerbit,
+            @RequestParam String isbn,
+            @RequestParam int stok,
+            @RequestParam String posisi
     ) {
         Buku buku = repo.findById(id).orElse(null);
 
         buku.judul = judul;
         buku.penulis = penulis;
         buku.penerbit = penerbit;
+        buku.tahunTerbit = tahunTerbit;
+        buku.isbn = isbn;
+        buku.stok = stok;
+        buku.posisi = posisi;
 
         repo.save(buku);
 
