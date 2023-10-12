@@ -35,4 +35,30 @@ public class BukuController {
         Buku buku = repo.findById(id).orElse(null);
         return buku;
     }
+
+    @PutMapping("/{id}")
+    public Buku ubahSatuBukuById(
+            @PathVariable("id") Integer id,
+            @RequestParam String judul,
+            @RequestParam String penulis,
+            @RequestParam String penerbit
+    ) {
+        Buku buku = repo.findById(id).orElse(null);
+
+        buku.judul = judul;
+        buku.penulis = penulis;
+        buku.penerbit = penerbit;
+
+        repo.save(buku);
+
+        return buku;
+    }
+
+    @DeleteMapping("/{id}")
+    public Buku hapusSatuBukuById(@PathVariable("id") Integer id) {
+        Buku buku = repo.findById(id).orElse(null);
+        repo.delete(buku);
+        return buku;
+    }
+
 }
