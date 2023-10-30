@@ -4,6 +4,13 @@ import org.sdarc.pustaka.models.Buku;
 import org.sdarc.pustaka.repositories.BukuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @RestController
 @RequestMapping(path = "/api/buku")
@@ -38,6 +45,7 @@ public class BukuController {
 
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{id}")
     public Buku cariSatuBukuById(@PathVariable("id") Integer id) {
         Buku buku = repo.findById(id).orElse(null);
@@ -75,6 +83,20 @@ public class BukuController {
         Buku buku = repo.findById(id).orElse(null);
         repo.delete(buku);
         return buku;
+    }
+
+    @PostMapping("/upload")
+    public String uploadGambar(@RequestParam("file") MultipartFile file) {
+
+        Path path = Paths.get("./output.jpg");
+
+        try {
+            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            return "Gagal";
+        }
+
+        return "Berhasil";
     }
 
 }
